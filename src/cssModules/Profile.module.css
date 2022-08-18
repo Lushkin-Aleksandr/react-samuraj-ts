@@ -8,3 +8,17 @@
     height: 300px;
     object-fit: cover;
 }
+
+.myPosts {
+    padding: 10px;
+}
+
+.avatarImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.post {
+    margin-bottom: 5px;
+}
