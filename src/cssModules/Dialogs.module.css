@@ -1,0 +1,86 @@
+.dialogs {
+    padding: 10px;
+    display: grid;
+    height: 100%;
+    grid-template-columns: minmax(250px, auto) 1fr;
+    grid-template-rows: 1fr;
+    min-height: 400px;
+}
+
+.dialogsItems {
+    /*background-color: red;*/
+}
+
+.dialog {
+    /*background-color: #fff;*/
+    padding: 10px 5px;
+    min-height: 50px;
+    /*border: 1px solid black;*/
+    display: flex;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.dialog:hover {
+    background-color: #0a9b0ca1;
+}
+
+.activeDialog .dialog {
+    background-color: rgba(255, 255, 0, 0.68);
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-right: 15px;
+}
+
+.dialogInfo {
+    flex-grow: 1;
+}
+
+.dialog:not(:last-child) {
+    border-bottom: 1px solid black;
+
+}
+
+.dialogName {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.dialogLastMessage {
+    font-size: 13px;
+
+}
+
+
+
+
+
+.chatWindow {
+    background-color: #fff;
+    /*border-bottom-left-radius: 10px;*/
+    /*border-bottom-right-radius: 10px;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.chatHistory {
+    flex-grow: 1;
+}
+
+.chatInputWrapper {
+    flex-basis: 50px;
+    background-color: rgba(1, 128, 10, 0.28);
+    padding: 10px;
+    display: flex;
+}
+
+.chatInput {
+    flex-grow: 1;
+    padding: 5px;
+}
+

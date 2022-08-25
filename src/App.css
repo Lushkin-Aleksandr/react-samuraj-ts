@@ -7,6 +7,11 @@
     box-sizing: border-box;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 ol, ul {
     list-style: none;
 }
@@ -28,7 +33,7 @@ ol, ul {
 
 .main {
     grid-area: p;
-    background-color: darkcyan;
+    background-color: #01800a;
 }
 
 
