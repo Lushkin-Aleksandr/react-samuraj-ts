@@ -8,6 +8,10 @@
     object-fit: cover;
 }
 
+.profileData {
+    padding: 0 10px;
+}
+
 .myPosts {
     padding: 10px;
 }
