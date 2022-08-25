@@ -26,6 +26,11 @@ ol, ul {
     grid-gap: 10px;
 }
 
+.main {
+    grid-area: p;
+    background-color: darkcyan;
+}
+
 
 
 
