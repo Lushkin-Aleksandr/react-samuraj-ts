@@ -8,8 +8,13 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
+import {StateType} from "./redux/state";
 
-function App() {
+type AppPropsType = {
+    state: StateType
+}
+
+const App: React.FC<AppPropsType> = (props) => {
     return (
         <div className='container'>
             <div className="app">
@@ -17,10 +22,10 @@ function App() {
                 <Navbar/>
                 <div className="main">
                     <Route path={'/profile'}>
-                        <Profile/>
+                        <Profile profilePage={props.state.profilePage}/>
                     </Route>
                     <Route path={'/dialogs'}>
-                        <Dialogs/>
+                        <Dialogs dialogsPage={props.state.dialogsPage}/>
                     </Route>
                     <Route path={'/news'}>
                         <News/>

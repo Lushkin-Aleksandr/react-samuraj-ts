@@ -13,7 +13,7 @@
 
 .dialog {
     /*background-color: #fff;*/
-    padding: 10px 5px;
+    padding: 10px 10px;
     min-height: 50px;
     /*border: 1px solid black;*/
     display: flex;
@@ -26,7 +26,7 @@
 }
 
 .activeDialog .dialog {
-    background-color: rgba(255, 255, 0, 0.68);
+    background-color: rgb(170 255 0 / 27%);
 }
 
 .avatar {
