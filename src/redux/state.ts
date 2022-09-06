@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {rerenderEntireTree} from "../render";
 
 
 // Types
@@ -54,10 +55,12 @@ const state: StateType = {
 
 export const addPost = (postText: string) => {
     state.profilePage.posts.push({id: v1(), postText, likesCount: 0})
+    rerenderEntireTree(state)
 }
 
 export const sendMessage = (messageText: string) => {
     state.dialogsPage.messages.push({id: v1(), messageText})
+    rerenderEntireTree(state)
 }
 
 
