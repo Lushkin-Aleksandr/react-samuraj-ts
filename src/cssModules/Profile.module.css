@@ -16,10 +16,26 @@
     padding: 10px;
 }
 
+.myPostsTitle {
+    margin-bottom: 5px;
+}
+
 .avatarImg {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.addPost {
+    margin-bottom: 15px;
+}
+
+.addPostText {
+
+}
+
+.addPostBtn {
+    padding: 5px;
 }
 
 .post {

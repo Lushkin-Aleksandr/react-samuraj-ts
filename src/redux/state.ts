@@ -1,26 +1,28 @@
+import {v1} from "uuid";
+
 
 // Types
+export type MessageType = {
+    id: string
+    messageText: string
+}
 export type DialogsType = {
-    id: number
+    id: string
     name: string
     lastMessage: string
 }
-
 export type PostType = {
-    id: number
+    id: string
     postText: string
     likesCount: number
 }
-
-
 export type ProfilePageType = {
     posts: PostType[]
 }
-
 export type DialogsPageType = {
     dialogs: DialogsType[]
+    messages: MessageType[]
 }
-
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
@@ -30,22 +32,34 @@ export type StateType = {
 
 
 // State
-const state = {
+const state: StateType = {
     profilePage: {
         posts: [
-            {id: 1, postText: 'Hi, how are you?', likesCount: 5},
-            {id: 2, postText: `It's my first post.`, likesCount: 10},
+            {id: v1(), postText: 'Hi, how are you?', likesCount: 5},
+            {id: v1(), postText: `It's my first post.`, likesCount: 10},
         ]
     },
     dialogsPage: {
         dialogs: [
-            {id: 1, name: 'Petya', lastMessage: 'Hello!'},
-            {id: 2, name: 'Vasya', lastMessage: 'How are you doing?'},
-            {id: 3, name: 'Masha', lastMessage: 'React pizza'},
-            {id: 4, name: 'Vitya', lastMessage: 'Study grids'},
-            {id: 5, name: 'Eva', lastMessage: 'My name is Eva...'},
-        ]
+            {id: v1(), name: 'Petya', lastMessage: 'Hello!'},
+            {id: v1(), name: 'Vasya', lastMessage: 'How are you doing?'},
+            {id: v1(), name: 'Masha', lastMessage: 'React pizza'},
+            {id: v1(), name: 'Vitya', lastMessage: 'Study grids'},
+            {id: v1(), name: 'Eva', lastMessage: 'My name is Eva...'},
+        ],
+        messages: []
     }
 }
+
+
+export const addPost = (postText: string) => {
+    state.profilePage.posts.push({id: v1(), postText, likesCount: 0})
+}
+
+export const sendMessage = (messageText: string) => {
+    state.dialogsPage.messages.push({id: v1(), messageText})
+}
+
+
 
 export default state;
