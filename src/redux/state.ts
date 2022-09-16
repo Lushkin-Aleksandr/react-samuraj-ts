@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {rerenderEntireTree} from "../render";
 
 
 // Types
@@ -19,17 +18,17 @@ export type PostType = {
 }
 export type ProfilePageType = {
     posts: PostType[]
+    newPostText: string
 }
 export type DialogsPageType = {
     dialogs: DialogsType[]
     messages: MessageType[]
+    newMessageText: string
 }
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
-
-
 
 
 // State
@@ -38,7 +37,8 @@ const state: StateType = {
         posts: [
             {id: v1(), postText: 'Hi, how are you?', likesCount: 5},
             {id: v1(), postText: `It's my first post.`, likesCount: 10},
-        ]
+        ],
+        newPostText: ''
     },
     dialogsPage: {
         dialogs: [
@@ -48,21 +48,37 @@ const state: StateType = {
             {id: v1(), name: 'Vitya', lastMessage: 'Study grids'},
             {id: v1(), name: 'Eva', lastMessage: 'My name is Eva...'},
         ],
-        messages: []
+        messages: [],
+        newMessageText: ''
     }
 }
 
+let callSubscriber: (state: StateType) => void;
 
-export const addPost = (postText: string) => {
-    state.profilePage.posts.push({id: v1(), postText, likesCount: 0})
-    rerenderEntireTree(state)
+export const addPost = () => {
+    state.profilePage.posts.unshift({id: v1(), postText: state.profilePage.newPostText, likesCount: 0})
+    state.profilePage.newPostText = ''
+    callSubscriber(state)
 }
 
-export const sendMessage = (messageText: string) => {
-    state.dialogsPage.messages.push({id: v1(), messageText})
-    rerenderEntireTree(state)
+export const sendMessage = () => {
+    state.dialogsPage.messages.push({id: v1(), messageText: state.dialogsPage.newMessageText})
+    state.dialogsPage.newMessageText = '';
+    callSubscriber(state)
 }
 
+export const changeNewPostText = (newPostText: string) => {
+    state.profilePage.newPostText = newPostText
+    callSubscriber(state)
+}
 
+export const changeNewMessageText = (newMessageText: string) => {
+    state.dialogsPage.newMessageText = newMessageText
+    callSubscriber(state)
+}
+
+export const subscribe = (subscriber: (state: StateType) => void) => {
+    callSubscriber = subscriber;
+}
 
 export default state;

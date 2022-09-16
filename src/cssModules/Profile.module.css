@@ -31,7 +31,8 @@
 }
 
 .addPostText {
-
+    padding: 5px;
+    resize: none;
 }
 
 .addPostBtn {
