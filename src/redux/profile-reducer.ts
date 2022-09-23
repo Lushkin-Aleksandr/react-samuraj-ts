@@ -1,11 +1,11 @@
-import {ActionType, ProfilePageType} from "./state";
+import {ActionTypes, ProfilePageType} from "./state";
 import {v1} from "uuid";
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
 
 
-const profileReducer = (state: ProfilePageType, action: ActionType): ProfilePageType => {
+const profileReducer = (state: ProfilePageType, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
             state.posts.unshift({
@@ -24,8 +24,8 @@ const profileReducer = (state: ProfilePageType, action: ActionType): ProfilePage
 }
 
 
-export const addPostAC = () => ({type: ADD_POST})
-export const changeNewPostTextAC = (newPostText: string) => ({type: CHANGE_NEW_POST_TEXT, payload: newPostText})
+export const addPostAC = () => ({type: ADD_POST} as const)
+export const changeNewPostTextAC = (newPostText: string) => ({type: CHANGE_NEW_POST_TEXT, payload: newPostText} as const)
 
 
 export default profileReducer;

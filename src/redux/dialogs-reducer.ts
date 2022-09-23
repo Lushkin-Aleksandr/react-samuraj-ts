@@ -1,4 +1,4 @@
-import state, {ActionType, DialogsPageType} from "./state";
+import {ActionTypes, DialogsPageType} from "./state";
 import {v1} from "uuid";
 
 
@@ -6,7 +6,7 @@ const SEND_MESSAGE = 'SEND-MESSAGE';
 const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE-NEW-MESSAGE-TEXT';
 
 
-const dialogsReducer = (state: DialogsPageType, action: ActionType): DialogsPageType => {
+const dialogsReducer = (state: DialogsPageType, action: ActionTypes): DialogsPageType => {
     switch (action.type) {
         case 'SEND-MESSAGE':
             state.messages.push({id: v1(), messageText: state.newMessageText})
@@ -21,8 +21,8 @@ const dialogsReducer = (state: DialogsPageType, action: ActionType): DialogsPage
 }
 
 
-export const sendMessageAC = () => ({type: SEND_MESSAGE})
-export const changeNewMessageTextAC = (newMessageText: string) => ({type: CHANGE_NEW_MESSAGE_TEXT, payload: newMessageText})
+export const sendMessageAC = () => ({type: SEND_MESSAGE} as const)
+export const changeNewMessageTextAC = (newMessageText: string) => ({type: CHANGE_NEW_MESSAGE_TEXT, payload: newMessageText} as const)
 
 
 export default dialogsReducer;

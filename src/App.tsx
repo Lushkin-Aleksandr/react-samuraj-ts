@@ -8,11 +8,11 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {ActionType, StateType} from "./redux/state";
+import {ActionTypes, StateType} from "./redux/state";
 
 type AppPropsType = {
     state: StateType
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {

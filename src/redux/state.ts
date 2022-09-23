@@ -1,8 +1,6 @@
 import {v1} from "uuid";
-import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
-
-
+import profileReducer, {addPostAC, changeNewPostTextAC} from "./profile-reducer";
+import dialogsReducer, {changeNewMessageTextAC, sendMessageAC} from "./dialogs-reducer";
 
 
 // Types
@@ -33,17 +31,15 @@ export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
-
-export type ActionType = {
-    type: string
-    payload?: any
-}
+export type DialogsActionType = ReturnType<typeof sendMessageAC> | ReturnType<typeof changeNewMessageTextAC>;
+export type ProfileActionType = ReturnType<typeof addPostAC> | ReturnType<typeof changeNewPostTextAC>;
+export type ActionTypes = ProfileActionType | DialogsActionType;
 export type StoreType = {
     _state: StateType,
     getState: () => StateType
     callSubscriber: (state: StateType) => void,
     subscribe: (subscriber: (state: StateType) => void) => void,
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionTypes) => void
 
 }
 
@@ -87,11 +83,6 @@ const store: StoreType = {
 
 
 }
-
-
-
-
-
 
 
 export default store;
