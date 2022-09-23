@@ -1,5 +1,9 @@
 import {v1} from "uuid";
 
+const ADD_POST = 'ADD-POST';
+const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
+const SEND_MESSAGE = 'SEND-MESSAGE';
+const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE-NEW-MESSAGE-TEXT';
 
 // Types
 export type MessageType = {
@@ -99,6 +103,13 @@ const store: StoreType = {
 
 
 }
+
+
+
+export const addPostAC = () => ({type: ADD_POST})
+export const changeNewPostTextAC = (newPostText: string) => ({type: CHANGE_NEW_POST_TEXT, payload: newPostText})
+export const sendMessageAC = () => ({type: SEND_MESSAGE})
+export const changeNewMessageTextAC = (newMessageText: string) => ({type: CHANGE_NEW_MESSAGE_TEXT, payload: newMessageText})
 
 
 export default store;
