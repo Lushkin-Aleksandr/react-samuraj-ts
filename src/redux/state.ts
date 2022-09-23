@@ -1,9 +1,9 @@
 import {v1} from "uuid";
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
 
-const ADD_POST = 'ADD-POST';
-const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
-const SEND_MESSAGE = 'SEND-MESSAGE';
-const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE-NEW-MESSAGE-TEXT';
+
+
 
 // Types
 export type MessageType = {
@@ -80,25 +80,9 @@ const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            this._state.profilePage.posts.unshift({
-                id: v1(),
-                postText: this._state.profilePage.newPostText,
-                likesCount: 0
-            })
-            this._state.profilePage.newPostText = ''
-            this.callSubscriber(this._state)
-        } else if (action.type === 'SEND-MESSAGE') {
-            this._state.dialogsPage.messages.push({id: v1(), messageText: this._state.dialogsPage.newMessageText})
-            this._state.dialogsPage.newMessageText = '';
-            this.callSubscriber(this._state)
-        } else if (action.type === 'CHANGE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.payload
-            this.callSubscriber(this._state)
-        } else if (action.type === 'CHANGE-NEW-MESSAGE-TEXT') {
-            this._state.dialogsPage.newMessageText = action.payload
-            this.callSubscriber(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this.callSubscriber(this._state)
     }
 
 
@@ -106,10 +90,8 @@ const store: StoreType = {
 
 
 
-export const addPostAC = () => ({type: ADD_POST})
-export const changeNewPostTextAC = (newPostText: string) => ({type: CHANGE_NEW_POST_TEXT, payload: newPostText})
-export const sendMessageAC = () => ({type: SEND_MESSAGE})
-export const changeNewMessageTextAC = (newMessageText: string) => ({type: CHANGE_NEW_MESSAGE_TEXT, payload: newMessageText})
+
+
 
 
 export default store;
