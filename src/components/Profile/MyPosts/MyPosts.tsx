@@ -1,13 +1,12 @@
 import React, {ChangeEvent, createRef, RefObject, KeyboardEvent} from 'react';
 import Post from "./Post/Post";
 import styles from '../../../cssModules/Profile.module.css'
-import {PostType} from "../../../redux/state";
+import {ActionType, PostType} from "../../../redux/state";
 
 type MyPostsPropsType = {
     posts: PostType[]
-    addPost: () => void
     newPostText: string
-    changeNewPostText: (newPostText: string) => void
+    dispatch: (action: ActionType) => void
 }
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -17,12 +16,9 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const inputRef: RefObject<HTMLTextAreaElement> = createRef();
 
     const addPost = () => {
-        // const text = inputRef.current?.value
-        // if (text) {
-        //     props.addPost(text);
-        //     props.changeNewPostText('')
-        // }
-        props.addPost()
+        props.dispatch({
+            type: 'ADD-POST'
+        })
     }
 
     const onEnterClickAddPost = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -32,7 +28,10 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     }
 
     const onTextareaChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeNewPostText(e.currentTarget.value)
+        props.dispatch({
+            type: 'CHANGE-NEW-POST-TEXT',
+            payload: e.currentTarget.value
+        })
     }
 
 

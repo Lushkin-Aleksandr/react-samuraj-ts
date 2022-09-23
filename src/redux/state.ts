@@ -29,15 +29,17 @@ export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
+
+export type ActionType = {
+    type: string
+    payload?: any
+}
 export type StoreType = {
     _state: StateType,
     getState: () => StateType
     callSubscriber: (state: StateType) => void,
-    addPost: () => void,
-    sendMessage: () => void,
-    changeNewPostText: (newPostText: string) => void,
-    changeNewMessageText: (newMessageText: string) => void,
     subscribe: (subscriber: (state: StateType) => void) => void,
+    dispatch: (action: ActionType) => void
 
 }
 
@@ -64,34 +66,39 @@ const store: StoreType = {
         }
     },
     getState() {
-      return this._state
+        return this._state
     },
-    callSubscriber(state: StateType) {},
-    addPost() {
-        this._state.profilePage.posts.unshift({id: v1(), postText: this._state.profilePage.newPostText, likesCount: 0})
-        this._state.profilePage.newPostText = ''
-        this.callSubscriber(this._state)
+    callSubscriber(state: StateType) {
     },
-    sendMessage() {
-        this._state.dialogsPage.messages.push({id: v1(), messageText: this._state.dialogsPage.newMessageText})
-        this._state.dialogsPage.newMessageText = '';
-        this.callSubscriber(this._state)
-    },
-    changeNewPostText(newPostText) {
-        this._state.profilePage.newPostText = newPostText
-        this.callSubscriber(this._state)
-    },
-    changeNewMessageText(newMessageText) {
-        this._state.dialogsPage.newMessageText = newMessageText
-        this.callSubscriber(this._state)
-    },
+
     subscribe(subscriber) {
         this.callSubscriber = subscriber;
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            this._state.profilePage.posts.unshift({
+                id: v1(),
+                postText: this._state.profilePage.newPostText,
+                likesCount: 0
+            })
+            this._state.profilePage.newPostText = ''
+            this.callSubscriber(this._state)
+        } else if (action.type === 'SEND-MESSAGE') {
+            this._state.dialogsPage.messages.push({id: v1(), messageText: this._state.dialogsPage.newMessageText})
+            this._state.dialogsPage.newMessageText = '';
+            this.callSubscriber(this._state)
+        } else if (action.type === 'CHANGE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.payload
+            this.callSubscriber(this._state)
+        } else if (action.type === 'CHANGE-NEW-MESSAGE-TEXT') {
+            this._state.dialogsPage.newMessageText = action.payload
+            this.callSubscriber(this._state)
+        }
     }
 
 
 }
-
 
 
 export default store;

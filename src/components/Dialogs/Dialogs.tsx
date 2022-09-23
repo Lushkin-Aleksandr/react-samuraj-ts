@@ -1,13 +1,12 @@
 import React, {ChangeEvent, createRef, RefObject} from 'react';
 import styles from '../../cssModules/Dialogs.module.css'
 import DialogItem from "./DialogItem";
-import {DialogsPageType} from "../../redux/state";
+import {ActionType, DialogsPageType} from "../../redux/state";
 
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    sendMessage: () => void
-    changeNewMessageText: (newMessageText: string) => void
+    dispatch: (action: ActionType) => void
 }
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
@@ -16,11 +15,16 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
 
     const sendMessage = () => {
-        props.sendMessage();
+        props.dispatch({
+            type: 'SEND-MESSAGE'
+        })
     }
 
     const onChangeNewMessageText = (e: ChangeEvent<HTMLInputElement>) => {
-        props.changeNewMessageText(e.currentTarget.value);
+        props.dispatch({
+            type: 'CHANGE-NEW-MESSAGE-TEXT',
+            payload: e.currentTarget.value
+        })
     }
 
 

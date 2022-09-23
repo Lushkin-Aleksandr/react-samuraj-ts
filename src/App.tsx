@@ -8,14 +8,11 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {StateType} from "./redux/state";
+import {ActionType, StateType} from "./redux/state";
 
 type AppPropsType = {
     state: StateType
-    addPost: () => void
-    sendMessage: () => void
-    changeNewPostText: (newPostText: string) => void
-    changeNewMessageText: (newMessageText: string) => void
+    dispatch: (action: ActionType) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -27,15 +24,13 @@ const App: React.FC<AppPropsType> = (props) => {
                 <div className="main">
                     <Route path={'/profile'}>
                         <Profile
-                            addPost={props.addPost}
                             profilePage={props.state.profilePage}
-                            changeNewPostText={props.changeNewPostText}/>
+                            dispatch={props.dispatch}/>
                     </Route>
                     <Route path={'/dialogs'}>
                         <Dialogs
-                            sendMessage={props.sendMessage}
                             dialogsPage={props.state.dialogsPage}
-                            changeNewMessageText={props.changeNewMessageText}/>
+                            dispatch={props.dispatch}/>
                     </Route>
                     <Route path={'/news'}>
                         <News/>
