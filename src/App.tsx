@@ -2,17 +2,16 @@ import React from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Dialogs from "./components/Dialogs/Dialogs";
+import DialogsContainer from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {ActionTypes, StateType} from "./redux/store";
+import {StoreType} from "./redux/redux-store";
 
 type AppPropsType = {
-    state: StateType
-    dispatch: (action: ActionTypes) => void
+    store: StoreType
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -24,13 +23,11 @@ const App: React.FC<AppPropsType> = (props) => {
                 <div className="main">
                     <Route path={'/profile'}>
                         <Profile
-                            profilePage={props.state.profilePage}
-                            dispatch={props.dispatch}/>
+                            store={props.store}/>
                     </Route>
                     <Route path={'/dialogs'}>
-                        <Dialogs
-                            dialogsPage={props.state.dialogsPage}
-                            dispatch={props.dispatch}/>
+                        <DialogsContainer
+                            store={props.store}/>
                     </Route>
                     <Route path={'/news'}>
                         <News/>

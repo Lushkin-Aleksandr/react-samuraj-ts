@@ -1,14 +1,35 @@
 import React, {ChangeEvent, createRef, RefObject, KeyboardEvent} from 'react';
 import Post from "./Post/Post";
 import styles from '../../../cssModules/Profile.module.css'
-import {addPostAC, changeNewPostTextAC} from "../../../redux/profile-reducer";
-import {ActionTypes, PostType} from "../../../redux/store";
+import {addPostAC, changeNewPostTextAC, PostType} from "../../../redux/profile-reducer";
+import {StoreType} from "../../../redux/redux-store";
+
+type MyPostsContainerPropsType = {
+    store: StoreType
+}
 
 type MyPostsPropsType = {
     posts: PostType[]
     newPostText: string
-    dispatch: (action: ActionTypes) => void
+    addPost: () => void
+    changeNewPostText: (newPostText: string) => void
 }
+
+const MyPostsContainer: React.FC<MyPostsContainerPropsType> = (props) => {
+    const addPost = () => props.store.dispatch(addPostAC())
+
+    const changeNewPostText = (newPostText: string) => {
+        props.store.dispatch(changeNewPostTextAC(newPostText))
+    }
+
+    return (
+        <MyPosts
+            posts={props.store.getState().profilePage.posts}
+            addPost={addPost}
+            newPostText={props.store.getState().profilePage.newPostText}
+            changeNewPostText={changeNewPostText}/>
+    );
+};
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
@@ -16,7 +37,7 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                                                                    likesCount={p.likesCount}/>)
     const inputRef: RefObject<HTMLTextAreaElement> = createRef();
 
-    const addPost = () => props.dispatch(addPostAC())
+    const addPost = () => props.addPost()
 
     const onEnterClickAddPost = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && e.ctrlKey) {
@@ -25,7 +46,7 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     }
 
     const onTextareaChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(changeNewPostTextAC(e.currentTarget.value))
+        props.changeNewPostText(e.currentTarget.value)
     }
 
 
@@ -53,4 +74,4 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     );
 };
 
-export default MyPosts;
+export default MyPostsContainer;

@@ -1,9 +1,27 @@
-import {ActionTypes, DialogsPageType} from "./store";
 import {v1} from "uuid";
 
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
 const CHANGE_NEW_MESSAGE_TEXT = 'CHANGE-NEW-MESSAGE-TEXT';
+
+export type MessageType = {
+    id: string
+    messageText: string
+}
+export type DialogsType = {
+    id: string
+    name: string
+    lastMessage: string
+}
+export type DialogsPageType = {
+    dialogs: DialogsType[]
+    messages: MessageType[]
+    newMessageText: string
+}
+type SendMessageActionType = ReturnType<typeof sendMessageAC>
+type changeNewMessageTextActionType = ReturnType<typeof changeNewMessageTextAC>
+type ActionTypes = SendMessageActionType | changeNewMessageTextActionType
+
 
 const initialState: DialogsPageType = {
     dialogs: [
