@@ -8,11 +8,11 @@ import Profile from "./components/Profile/Profile";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {StoreType} from "./redux/redux-store";
 
 type AppPropsType = {
-    store: StoreType
 }
+
+
 
 const App: React.FC<AppPropsType> = (props) => {
     return (
@@ -22,12 +22,10 @@ const App: React.FC<AppPropsType> = (props) => {
                 <Navbar/>
                 <div className="main">
                     <Route path={'/profile'}>
-                        <Profile
-                            store={props.store}/>
+                        <Profile/>
                     </Route>
                     <Route path={'/dialogs'}>
-                        <DialogsContainer
-                            store={props.store}/>
+                        <DialogsContainer/>
                     </Route>
                     <Route path={'/news'}>
                         <News/>

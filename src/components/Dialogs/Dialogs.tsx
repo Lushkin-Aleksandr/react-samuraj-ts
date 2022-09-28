@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import styles from '../../cssModules/Dialogs.module.css'
 import DialogItem from "./DialogItem";
 import {changeNewMessageTextAC, DialogsPageType, sendMessageAC} from "../../redux/dialogs-reducer";
-import {StoreType} from "../../redux/redux-store";
+import StoreContext from "../../StoreContext";
 
 
 type DialogsPropsType = {
@@ -12,7 +12,7 @@ type DialogsPropsType = {
 }
 
 type DialogsContainerPropsType = {
-    store: StoreType
+
 }
 
 
@@ -20,17 +20,20 @@ type DialogsContainerPropsType = {
 const DialogsContainer: React.FC<DialogsContainerPropsType> = (props) => {
 
 
-    const sendMessage = () => props.store.dispatch(sendMessageAC())
-
-    const changeNewMessageText = (newMessageText: string) => props.store.dispatch(changeNewMessageTextAC(newMessageText));
-
-
-
     return (
-        <Dialogs
-            dialogsPage={props.store.getState().dialogsPage}
-            sendMessage={sendMessage}
-            changeNewMessageText={changeNewMessageText}/>
+        <StoreContext.Consumer>
+            {(store) => {
+                const sendMessage = () => store.dispatch(sendMessageAC())
+
+                const changeNewMessageText = (newMessageText: string) => store.dispatch(changeNewMessageTextAC(newMessageText));
+                return (
+                    <Dialogs
+                        dialogsPage={store.getState().dialogsPage}
+                        sendMessage={sendMessage}
+                        changeNewMessageText={changeNewMessageText}/>
+                )
+            }}
+        </StoreContext.Consumer>
     );
 };
 

@@ -2,10 +2,9 @@ import React, {ChangeEvent, createRef, RefObject, KeyboardEvent} from 'react';
 import Post from "./Post/Post";
 import styles from '../../../cssModules/Profile.module.css'
 import {addPostAC, changeNewPostTextAC, PostType} from "../../../redux/profile-reducer";
-import {StoreType} from "../../../redux/redux-store";
+import StoreContext from "../../../StoreContext";
 
 type MyPostsContainerPropsType = {
-    store: StoreType
 }
 
 type MyPostsPropsType = {
@@ -16,18 +15,24 @@ type MyPostsPropsType = {
 }
 
 const MyPostsContainer: React.FC<MyPostsContainerPropsType> = (props) => {
-    const addPost = () => props.store.dispatch(addPostAC())
 
-    const changeNewPostText = (newPostText: string) => {
-        props.store.dispatch(changeNewPostTextAC(newPostText))
-    }
 
     return (
-        <MyPosts
-            posts={props.store.getState().profilePage.posts}
-            addPost={addPost}
-            newPostText={props.store.getState().profilePage.newPostText}
-            changeNewPostText={changeNewPostText}/>
+        <StoreContext.Consumer>
+            {(store) => {
+                const addPost = () => store.dispatch(addPostAC())
+
+                const changeNewPostText = (newPostText: string) => {
+                    store.dispatch(changeNewPostTextAC(newPostText))
+                }
+
+                return <MyPosts
+                    posts={store.getState().profilePage.posts}
+                    addPost={addPost}
+                    newPostText={store.getState().profilePage.newPostText}
+                    changeNewPostText={changeNewPostText}/>
+            }}
+        </StoreContext.Consumer>
     );
 };
 
