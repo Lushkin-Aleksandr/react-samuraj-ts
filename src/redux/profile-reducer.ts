@@ -1,11 +1,18 @@
-import {ActionTypes, ProfilePageType} from "./state";
+import {ActionTypes, ProfilePageType} from "./store";
 import {v1} from "uuid";
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
 
+const initialState: ProfilePageType = {
+    posts: [
+        {id: v1(), postText: 'Hi, how are you?', likesCount: 5},
+        {id: v1(), postText: `It's my first post.`, likesCount: 10},
+    ],
+    newPostText: ''
+}
 
-const profileReducer = (state: ProfilePageType, action: ActionTypes): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
             state.posts.unshift({

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, createRef, RefObject} from 'react';
 import styles from '../../cssModules/Dialogs.module.css'
 import DialogItem from "./DialogItem";
-import {ActionTypes, DialogsPageType} from "../../redux/state";
+import {ActionTypes, DialogsPageType} from "../../redux/store";
 import {changeNewMessageTextAC, sendMessageAC} from "../../redux/dialogs-reducer";
 
 
