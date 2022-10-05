@@ -5,7 +5,7 @@ const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
 
 type AddPostActionType = ReturnType<typeof addPostAC>
 type changeNewPostTextActionType = ReturnType<typeof changeNewPostTextAC>
-type ActionTypes = AddPostActionType | changeNewPostTextActionType
+export type ProfileActionTypes = AddPostActionType | changeNewPostTextActionType
 
 
 export type PostType = {
@@ -26,19 +26,27 @@ const initialState: ProfilePageType = {
     newPostText: ''
 }
 
-const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
+const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionTypes): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
-            state.posts.unshift({
+            const newPost: PostType = {
                 id: v1(),
                 postText: state.newPostText,
                 likesCount: 0
-            })
-            state.newPostText = ''
+            }
+
+            return  {
+                ...state,
+                posts: [
+                    newPost,
+                    ...state.posts
+                ]
+            }
+
             return state;
         case 'CHANGE-NEW-POST-TEXT':
             state.newPostText = action.payload
-            return state;
+            return {...state, newPostText: action.payload};
         default:
             return state;
     }
@@ -46,7 +54,10 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
 
 
 export const addPostAC = () => ({type: ADD_POST} as const)
-export const changeNewPostTextAC = (newPostText: string) => ({type: CHANGE_NEW_POST_TEXT, payload: newPostText} as const)
+export const changeNewPostTextAC = (newPostText: string) => ({
+    type: CHANGE_NEW_POST_TEXT,
+    payload: newPostText
+} as const)
 
 
 export default profileReducer;

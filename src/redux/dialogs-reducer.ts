@@ -8,19 +8,19 @@ export type MessageType = {
     id: string
     messageText: string
 }
-export type DialogsType = {
+export type DialogType = {
     id: string
     name: string
     lastMessage: string
 }
 export type DialogsPageType = {
-    dialogs: DialogsType[]
+    dialogs: DialogType[]
     messages: MessageType[]
     newMessageText: string
 }
 type SendMessageActionType = ReturnType<typeof sendMessageAC>
 type changeNewMessageTextActionType = ReturnType<typeof changeNewMessageTextAC>
-type ActionTypes = SendMessageActionType | changeNewMessageTextActionType
+export type DialogsActionTypes = SendMessageActionType | changeNewMessageTextActionType
 
 
 const initialState: DialogsPageType = {
@@ -35,15 +35,13 @@ const initialState: DialogsPageType = {
     newMessageText: ''
 }
 
-const dialogsReducer = (state: DialogsPageType = initialState, action: ActionTypes): DialogsPageType => {
+const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionTypes): DialogsPageType => {
     switch (action.type) {
         case 'SEND-MESSAGE':
-            state.messages.push({id: v1(), messageText: state.newMessageText})
-            state.newMessageText = '';
-            return state;
+            const newMessage = {id: v1(), messageText: state.newMessageText}
+            return {...state, messages: [...state.messages, newMessage]};
         case 'CHANGE-NEW-MESSAGE-TEXT':
-            state.newMessageText = action.payload
-            return state;
+            return {...state, newMessageText: action.payload};
         default:
             return state;
     }

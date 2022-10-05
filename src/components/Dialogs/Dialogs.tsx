@@ -1,48 +1,18 @@
 import React, {ChangeEvent} from 'react';
 import styles from '../../cssModules/Dialogs.module.css'
 import DialogItem from "./DialogItem";
-import {changeNewMessageTextAC, DialogsPageType, sendMessageAC} from "../../redux/dialogs-reducer";
-import StoreContext from "../../StoreContext";
+import {DialogsPropsType} from "./DialogsContainer";
 
-
-type DialogsPropsType = {
-    dialogsPage: DialogsPageType
-    sendMessage: () => void
-    changeNewMessageText: (newMessageText: string) => void
-}
-
-type DialogsContainerPropsType = {
-
-}
-
-
-
-const DialogsContainer: React.FC<DialogsContainerPropsType> = (props) => {
-
-
-    return (
-        <StoreContext.Consumer>
-            {(store) => {
-                const sendMessage = () => store.dispatch(sendMessageAC())
-
-                const changeNewMessageText = (newMessageText: string) => store.dispatch(changeNewMessageTextAC(newMessageText));
-                return (
-                    <Dialogs
-                        dialogsPage={store.getState().dialogsPage}
-                        sendMessage={sendMessage}
-                        changeNewMessageText={changeNewMessageText}/>
-                )
-            }}
-        </StoreContext.Consumer>
-    );
-};
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
-    const dialogItems: JSX.Element[] = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name} lastMessage={d.lastMessage} />)
-    const messageItems: JSX.Element[] = props.dialogsPage.messages.map(m => <div key={m.id} className={styles.messageItem}><span>{m.messageText}</span></div>)
+    const dialogItems: JSX.Element[] = props.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name} lastMessage={d.lastMessage} />)
+    const messageItems: JSX.Element[] = props.messages.map(m => <div key={m.id} className={styles.messageItem}><span>{m.messageText}</span></div>)
 
 
-    const sendMessage = () => props.sendMessage()
+    const sendMessage = () => {
+        props.sendMessage()
+        props.changeNewMessageText('')
+    }
 
     const onChangeNewMessageText = (e: ChangeEvent<HTMLInputElement>) => props.changeNewMessageText(e.currentTarget.value)
 
@@ -62,7 +32,7 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
                 <div className={styles.chatInputWrapper}>
                     <input
                         className={styles.chatInput}
-                        value={props.dialogsPage.newMessageText}
+                        value={props.newMessageText}
                         onChange={onChangeNewMessageText}/>
                     <button
                         className={styles.sendMessageBtn}
@@ -73,4 +43,4 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
     );
 };
 
-export default DialogsContainer;
+export default Dialogs;
