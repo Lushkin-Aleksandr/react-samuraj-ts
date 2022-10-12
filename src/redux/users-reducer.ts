@@ -13,17 +13,16 @@ const SET_USERS = 'SET-USERS'
 //------------------------------------------------
 
 
-type LocationType = {
-    city: string
-    country: string
+type PhotosType = {
+    small: string | null,
+    large: string | null
 }
 export type UserType = {
     id: string,
-    avatarUrl: string
+    photos: PhotosType
     followed: boolean,
-    fullName: string
+    name: string
     status: string
-    location: LocationType
 }
 export type UsersStateType = {
     users: UserType[]

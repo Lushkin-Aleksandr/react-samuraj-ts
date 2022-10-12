@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../../../../cssModules/Profile.module.css'
-import avatar from '../../../../assets/avatar.png'
+import avatar from '../../../../assets/images/avatar.png'
 
 type PostPropsType = {
     postText: string,
