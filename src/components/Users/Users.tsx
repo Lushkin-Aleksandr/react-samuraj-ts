@@ -15,7 +15,6 @@ type PropsType = {
 }
 
 const Users:React.FC<PropsType> = (props) => {
-  if (!props.users.length) return <h1>Loading...</h1>
 
   const pagesCount = Math.ceil(props.totalCount / props.countOnPage)
   const pages = []
