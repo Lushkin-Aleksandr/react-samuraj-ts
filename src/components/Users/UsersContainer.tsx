@@ -1,8 +1,10 @@
 import {connect} from "react-redux";
+import Users from "./Users";
+import React from "react";
+import axios from "axios";
+import {followAC, setCurrentPageAC, setTotalCountAC, setUsersAC, unfollowAC, UserType} from "../../redux/users-reducer";
 import {StateType} from "../../redux/redux-store";
 import {Dispatch} from "redux";
-import {followAC, setCurrentPageAC, setTotalCountAC, setUsersAC, unfollowAC, UserType} from "../../redux/users-reducer";
-import Users from "./Users";
 
 
 type MapStateToPropsType = {
@@ -20,6 +22,44 @@ type MapDispatchToPropsType = {
 }
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
+
+
+
+
+
+
+class UsersContainer extends React.Component<UsersPropsType, any> {
+
+  componentDidMount() {
+    !this.props.users.length && axios.get(`https://social-network.samuraijs.com/api/1.0/users/?count=${this.props.countOnPage}&page=${this.props.currentPage}`).then(response => {
+      this.props.setUsers(response.data.items)
+      this.props.setTotalCount(response.data.totalCount)
+    })
+  }
+
+  handlePageChange = (page: number) => {
+    axios.get(`https://social-network.samuraijs.com/api/1.0/users/?count=${this.props.countOnPage}&page=${page}`).then(response => {
+      this.props.setUsers(response.data.items)
+      this.props.setCurrentPage(page)
+      this.props.setTotalCount(response.data.totalCount)
+    })
+  }
+
+  render() {
+    return (
+      <Users
+        users={this.props.users}
+        countOnPage={this.props.countOnPage}
+        currentPage={this.props.currentPage}
+        totalCount={this.props.totalCount}
+        follow={this.props.follow}
+        unfollow={this.props.unfollow}
+        handlePageChange={this.handlePageChange}/>
+    )
+  }
+}
+
+
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({
   users: state.usersPage.users,
   countOnPage: state.usersPage.countOnPage,
@@ -35,4 +75,5 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => ({
   setTotalCount: totalCount => dispatch(setTotalCountAC(totalCount))
 })
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
