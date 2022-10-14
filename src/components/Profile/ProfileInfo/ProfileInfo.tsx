@@ -1,15 +1,24 @@
 import React from 'react';
 import styles from "../../../cssModules/Profile.module.css";
+import {ProfileType} from "../../../redux/profile-reducer";
+import avatar from '../../../assets/images/avatar.png'
 
-const ProfileInfo = () => {
+
+
+
+type PropsType = {
+  profile: ProfileType
+}
+
+const ProfileInfo: React.FC<PropsType> = (props) => {
+  if (!props.profile) return null
+
     return (
         <div>
-            <div>
-                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt=""
-                     className={styles.profileImg}/>
-            </div>
             <div className={styles.profileData}>
-                ava + description
+              <img style={{maxWidth: '500px'}} src={props.profile.photos.large || avatar} alt=""/>
+              <h1>{props.profile.fullName}</h1>
+
             </div>
         </div>
     );

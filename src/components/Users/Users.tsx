@@ -1,6 +1,7 @@
 import React from 'react';
 import defaultUserAvatar from "../../assets/images/avatar.png";
 import {UserType} from "../../redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 
 
@@ -39,8 +40,8 @@ const Users:React.FC<PropsType> = (props) => {
         {props.users.map(u => {
           return (
             <li key={u.id} style={{marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid white'}}>
-              <img src={u.photos.small ? u.photos.small : defaultUserAvatar}
-                   style={{width: '48px', height: '48px', borderRadius: '50%'}}/>
+              <NavLink to={`/profile/${u.id}`}><img src={u.photos.small ? u.photos.small : defaultUserAvatar}
+                      style={{width: '48px', height: '48px', borderRadius: '50%'}}/></NavLink>
               <div>Name: {u.name}</div>
               {u.followed
                 ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button>

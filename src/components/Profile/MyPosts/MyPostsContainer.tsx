@@ -27,11 +27,11 @@ export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 
 
-const mapStateToProps = (state: StateType): ProfilePageType => ({
+const mapStateToProps = (state: StateType):MapStateToPropsType => ({
     posts: state.profilePage.posts,
     newPostText: state.profilePage.newPostText
 })
-const mapDispatchToProps = (dispatch: Dispatch<ProfileActionTypes>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<ProfileActionTypes>): MapDispatchToPropsType => ({
     addPost: () => dispatch(addPostAC()),
     changeNewPostText: (newPostText: string) => dispatch(changeNewPostTextAC(newPostText))
 })
