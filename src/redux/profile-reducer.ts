@@ -59,7 +59,6 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
         ]
       }
 
-      return state;
     case 'CHANGE-NEW-POST-TEXT':
       state.newPostText = action.payload
       return {...state, newPostText: action.payload};
