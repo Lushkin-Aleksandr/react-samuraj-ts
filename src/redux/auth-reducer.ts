@@ -4,6 +4,9 @@
 // Constants
 //------------------------------------------------
 
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
+
 const SET_USER_DATA = 'SET_USER_DATA'
 
 
@@ -69,6 +72,21 @@ export const setUserData = (data: AuthDataType) => {
         }
     } as const
 }
+
+//------------------------------------------------
+// Thunk creators
+//------------------------------------------------
+
+export const me = () => (dispatch: Dispatch) => {
+    authAPI.me()
+        .then(data => {
+            if (data.resultCode === 0) {
+                const {id, email, login} = data.data
+                dispatch(setUserData({userId: id, email, login}))
+            }
+        })
+}
+
 
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import defaultUserAvatar from "../../assets/images/avatar.png";
 import {UserType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {usersAPI} from "../../api/api";
 
 
 type PropsType = {
@@ -10,12 +10,14 @@ type PropsType = {
     countOnPage: number
     currentPage: number
     totalCount: number
-    follow: (userId: string) => void
-    unfollow: (userId: string) => void
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
     handlePageChange: (currentPage: number) => void
+    followingInProgress: number[]
+    setFollowingInProgress: (userId: number, isFetching: boolean) => void
 }
 
-const Users:React.FC<PropsType> = (props) => {
+const Users: React.FC<PropsType> = (props) => {
 
     const pagesCount = Math.ceil(props.totalCount / props.countOnPage)
     const pages = []
@@ -41,44 +43,20 @@ const Users:React.FC<PropsType> = (props) => {
                     return (
                         <li key={u.id}
                             style={{marginBottom: '10px', paddingBottom: '10px', borderBottom: '1px solid white'}}>
-                            <NavLink to={`/profile/${u.id}`}><img
-                                src={u.photos.small ? u.photos.small : defaultUserAvatar}
-                                style={{width: '48px', height: '48px', borderRadius: '50%'}}/></NavLink>
+                            <NavLink to={`/profile/${u.id}`}>
+                                <img
+                                    src={u.photos.small ? u.photos.small : defaultUserAvatar}
+                                    style={{width: '48px', height: '48px', borderRadius: '50%'}}
+                                    alt={'avatar'}/>
+                            </NavLink>
                             <div>Name: {u.name}</div>
                             {u.followed
-                                ? <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': 'bf0a45fd-7838-4bec-9b72-3f203f5ee23d'
-                                        }
-                                    })
-                                        .then(res => {
-                                            if (res.data.resultCode === 0) {
-                                                props.unfollow(u.id)
-                                            } else {
-                                                console.warn(res.data.messages[0])
-                                            }
-                                        })
-
-                                }}>Unfollow</button>
-                                : <button onClick={() => {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, null, {
-                                        withCredentials: true,
-                                        headers: {
-                                            'API-KEY': 'bf0a45fd-7838-4bec-9b72-3f203f5ee23d'
-                                        }
-                                    })
-                                        .then(res => {
-                                            if (res.data.resultCode === 0) {
-                                                props.follow(u.id)
-                                            } else {
-                                                console.warn(res.data.messages[0])
-                                            }
-                                        })
-
-
-                                } }>Follow</button>}
+                                ? <button
+                                    disabled={props.followingInProgress.some(el => el === u.id)}
+                                    onClick={() => props.unfollow(u.id)}>Unfollow</button>
+                                : <button
+                                    disabled={props.followingInProgress.some(el => el === u.id)}
+                                    onClick={() => props.follow(u.id)}>Follow</button>}
                         </li>
                     )
                 })}

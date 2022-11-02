@@ -1,51 +1,49 @@
 import React, {Component} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {ProfileType, setProfile} from "../../redux/profile-reducer";
+import {getProfile, ProfileType} from "../../redux/profile-reducer";
 import {StateType} from "../../redux/redux-store";
-import axios from "axios";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 
 
 type ParamsType = {
-  userId: string
+    userId: string
 }
 
 type MapStateToPropsType = {
-  profile: ProfileType
+    profile: ProfileType
+    isAuth: boolean
 }
 
 export type ProfilePropsType = MapStateToPropsType & {
-  setProfile: (profile: ProfileType) => void
+    getProfile: (userId: number) => void
 } & RouteComponentProps<ParamsType>
 
 
 class ProfileContainer extends Component<ProfilePropsType, any> {
 
-  componentDidMount() {
-    let userId = this.props.match.params.userId || '2'
-
-    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
-      this.props.setProfile(response.data)
-    })
-
-  }
+    componentDidMount() {
+        let userId = this.props.match.params.userId || '11385'
+        this.props.getProfile(+userId)
+    }
 
 
-  render() {
-    if (!this.props.profile) return <h2>Loading...</h2>
+    render() {
+        if (!this.props.isAuth) return <Redirect to={'login'}/>
+        if (!this.props.profile) return <h2>Loading...</h2>
 
-    return (
-      <Profile profile={this.props.profile}/>
-    );
-  }
+        return (
+            <Profile profile={this.props.profile}/>
+        );
+    }
 }
 
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({
-  profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
 const ProfileContainerWithUrlData = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, {setProfile})(ProfileContainerWithUrlData);
+export default connect(mapStateToProps, {getProfile})(ProfileContainerWithUrlData);
