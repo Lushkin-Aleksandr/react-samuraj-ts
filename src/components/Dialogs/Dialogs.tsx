@@ -18,8 +18,6 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
     const onChangeNewMessageText = (e: ChangeEvent<HTMLInputElement>) => props.changeNewMessageText(e.currentTarget.value)
 
 
-    if (!props.isAuth) return <Redirect to={'login'}/>
-
     return (
         <div className={styles.dialogs}>
             <div className={styles.dialogsItems}>

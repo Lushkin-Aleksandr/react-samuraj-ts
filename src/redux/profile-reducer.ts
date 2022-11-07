@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
