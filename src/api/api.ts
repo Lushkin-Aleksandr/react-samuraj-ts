@@ -11,6 +11,8 @@ type AuthAPIType = {
 }
 type ProfileAPIType = {
     getProfile: (userId: number) => Promise<any>
+    getStatus: (userId: number) => Promise<any>
+    updateStatus: (status: string) => Promise<any>
 }
 
 
@@ -47,6 +49,12 @@ export const authAPI: AuthAPIType = {
 export const profileAPI: ProfileAPIType = {
     getProfile: userId => {
         return axiosInstance.get(`profile/${userId}`).then(res => res.data)
+    },
+    getStatus: userId => {
+        return axiosInstance.get(`profile/status/${userId}`).then(res => res.data)
+    },
+    updateStatus: (status) => {
+        return axiosInstance.put(`profile/status`, {status}).then(res => res.data)
     }
 }
 
