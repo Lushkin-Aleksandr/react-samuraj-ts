@@ -25,11 +25,11 @@
     border-radius: 50%;
 }
 
-.addPost {
+.addPostForm {
     margin-bottom: 15px;
 }
 
-.addPostText {
+.addPostText textarea {
     padding: 5px;
     resize: none;
 }

@@ -74,15 +74,26 @@
     color: #000;
 }
 
-.chatInputWrapper {
+.form {
     flex-basis: 50px;
+    gap: 10px;
     background-color: rgba(1, 128, 10, 0.28);
     padding: 10px;
     display: flex;
+    align-items: flex-end;
 }
 
-.chatInput {
+.chatTextarea {
     flex-grow: 1;
+}
+
+.chatTextarea textarea {
+    width: 100%;
     padding: 5px;
+    overflow-y: auto;
+}
+
+.sendMessageBtn {
+    padding: 5px 10px;
 }
 

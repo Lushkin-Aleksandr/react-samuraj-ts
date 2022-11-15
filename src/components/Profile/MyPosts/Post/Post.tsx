@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../../../cssModules/Profile.module.css'
+import styles from '../../Profile.module.css'
 import avatar from '../../../../assets/images/avatar.png'
 
 type PostPropsType = {

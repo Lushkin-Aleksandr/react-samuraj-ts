@@ -3,17 +3,14 @@ import {compose, Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
-const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT';
 const SET_PROFILE = 'SET-PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
 type AddPostActionType = ReturnType<typeof addPostAC>
-type changeNewPostTextActionType = ReturnType<typeof changeNewPostTextAC>
 type setProfileActionType = ReturnType<typeof setProfile>
 type SetStatusActionType = ReturnType<typeof setStatus>
 export type ProfileActionTypes =
     AddPostActionType
-    | changeNewPostTextActionType
     | setProfileActionType
     | SetStatusActionType
 
@@ -38,7 +35,6 @@ export type ProfileType = null | {
 export type ProfilePageType = {
     profile: ProfileType
     posts: PostType[]
-    newPostText: string
     status: string
 }
 
@@ -48,7 +44,6 @@ const initialState: ProfilePageType = {
         {id: v1(), postText: 'Hi, how are you?', likesCount: 5},
         {id: v1(), postText: `It's my first post.`, likesCount: 10},
     ],
-    newPostText: '',
     status: ''
 }
 
@@ -57,7 +52,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
         case 'ADD-POST':
             const newPost: PostType = {
                 id: v1(),
-                postText: state.newPostText,
+                postText: action.payload.postText,
                 likesCount: 0
             }
 
@@ -69,9 +64,6 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
                 ]
             }
 
-        case 'CHANGE-NEW-POST-TEXT':
-            state.newPostText = action.payload
-            return {...state, newPostText: action.payload};
         case "SET-PROFILE":
             return {
                 ...state,
@@ -89,11 +81,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
 }
 
 
-export const addPostAC = () => ({type: ADD_POST} as const)
-export const changeNewPostTextAC = (newPostText: string) => ({
-    type: CHANGE_NEW_POST_TEXT,
-    payload: newPostText
-} as const)
+export const addPostAC = (postText: string) => ({type: ADD_POST, payload: {postText}} as const)
 export const setProfile = (profile: ProfileType) => {
     return {
         type: SET_PROFILE,
