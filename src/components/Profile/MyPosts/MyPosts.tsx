@@ -18,7 +18,11 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             likesCount={p.likesCount}/>
     })
 
-    const addPost = (data: FormDataType) => props.addPost(data.postText)
+    const addPost = (data: FormDataType) => {
+        if (data.postText) {
+            props.addPost(data.postText)
+        }
+    }
 
 
     return (
@@ -46,7 +50,7 @@ const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                     name={'postText'}
                     component={Textarea}
                     placeholder={'Type text for your new post...'}
-                    validate={[requiredField, maxLength20Validator]}/>
+                    validate={[maxLength20Validator]}/>
             </div>
             <div>
                 <button className={styles.addPostBtn}>Add post</button>

@@ -17,7 +17,7 @@ export type DialogsPageType = {
     messages: MessageType[]
 }
 type SendMessageActionType = ReturnType<typeof sendMessageAC>
-export type DialogsActionTypes = SendMessageActionType
+export type DialogsActionType = SendMessageActionType
 
 
 const initialState: DialogsPageType = {
@@ -31,7 +31,7 @@ const initialState: DialogsPageType = {
     messages: [],
 }
 
-const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionTypes): DialogsPageType => {
+const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionType): DialogsPageType => {
     switch (action.type) {
         case 'SEND-MESSAGE':
             const newMessage = {id: v1(), messageText: action.payload.messageText}

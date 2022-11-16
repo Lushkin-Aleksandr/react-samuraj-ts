@@ -1,18 +1,18 @@
 import axios from "axios";
 
 
-type UserAPIType = {
-    getUsers: (countOnPage: number, currentPage: number) => Promise<any>
-    follow: (userId: number) => Promise<any>
-    unfollow: (userId: number) => Promise<any>
+export type LoginDataType = {
+    email: string
+    password: string
+    rememberMe?: boolean
+    captcha?: boolean
 }
-type AuthAPIType = {
-    me: () => Promise<any>
-}
-type ProfileAPIType = {
-    getProfile: (userId: number) => Promise<any>
-    getStatus: (userId: number) => Promise<any>
-    updateStatus: (status: string) => Promise<any>
+
+
+type ResponseType<D = {}> = {
+    resultCode: number,
+    messages: string[],
+    data: D
 }
 
 
@@ -25,35 +25,44 @@ const axiosInstance = axios.create({
 })
 
 
-export const usersAPI: UserAPIType = {
-    getUsers: (countOnPage, currentPage) => {
+export const usersAPI = {
+    getUsers: (countOnPage: number, currentPage: number) => {
         return axiosInstance.get(`users/?count=${countOnPage}&page=${currentPage}`)
             .then(res => res.data)
     },
-    follow: userId => {
+    follow: (userId: number) => {
         return axiosInstance.post(`follow/${userId}`)
             .then(res => res.data)
     },
-    unfollow: userId => {
+    unfollow: (userId: number) => {
         return axiosInstance.delete(`follow/${userId}`)
             .then(res => res.data)
     }
 }
 
-export const authAPI: AuthAPIType = {
+export const authAPI = {
     me: () => {
         return axiosInstance.get(`auth/me`).then(res => res.data)
+    },
+    login: (loginData: LoginDataType) => {
+        return axiosInstance.post<ResponseType<{userId?: string}>>(`auth/login`, {...loginData})
+            .then(res => res.data)
+    },
+    logout: () => {
+        return axiosInstance.delete<ResponseType>(`auth/login`)
+            .then(res => res.data)
     }
+
 }
 
-export const profileAPI: ProfileAPIType = {
-    getProfile: userId => {
+export const profileAPI = {
+    getProfile: (userId: number) => {
         return axiosInstance.get(`profile/${userId}`).then(res => res.data)
     },
-    getStatus: userId => {
+    getStatus: (userId: number) => {
         return axiosInstance.get(`profile/status/${userId}`).then(res => res.data)
     },
-    updateStatus: (status) => {
+    updateStatus: (status: string) => {
         return axiosInstance.put(`profile/status`, {status}).then(res => res.data)
     }
 }

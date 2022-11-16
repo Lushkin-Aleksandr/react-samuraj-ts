@@ -47,7 +47,7 @@ type SetCurrentPageActionType = ReturnType<typeof setCurrentPage>
 type SetTotalCountActionType = ReturnType<typeof setTotalCount>
 type SetIsFetchingActionType = ReturnType<typeof setIsFetching>
 type SetFollowingInProgressActionType = ReturnType<typeof setFollowingInProgress>
-type ActionTypes =
+export type UsersActionType =
     FollowActionType
     | UnfollowActionType
     | SetUsersActionType
@@ -73,7 +73,7 @@ const initialState: UsersStateType = {
 // Reducer
 //------------------------------------------------
 
-const usersReducer = (state: UsersStateType = initialState, action: ActionTypes): UsersStateType => {
+const usersReducer = (state: UsersStateType = initialState, action : UsersActionType): UsersStateType => {
     switch (action.type) {
         case "FOLLOW":
             return {...state, users: state.users.map(u => u.id === action.payload.userId ? {...u, followed: true} : u)}
