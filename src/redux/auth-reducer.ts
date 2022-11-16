@@ -1,5 +1,6 @@
 import {authAPI, LoginDataType} from "../api/api";
 import {AppThunkType} from "./redux-store";
+import {stopSubmit} from "redux-form";
 
 
 //------------------------------------------------
@@ -89,12 +90,16 @@ export const me = (): AppThunkType => (dispatch) => {
 
 
 export const login = (loginData: LoginDataType): AppThunkType => (dispatch) => {
+
     authAPI.login(loginData)
         .then(data => {
             if (data.resultCode === 0) {
                 dispatch(me())
+            } else if (data.resultCode === 10) {
+                alert('Captcha')
             } else {
-                alert(data.messages[0])
+                const action = stopSubmit('login', {_error: data.messages[0]})
+                dispatch(action)
             }
         })
 }

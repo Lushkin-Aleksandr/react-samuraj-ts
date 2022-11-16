@@ -24,8 +24,11 @@ const LoginForm:React.FC<InjectedFormProps<FormDataType>> = (props) => {
             <div>
                 <Field name={'password'} component={Input} validate={[requiredField]} placeholder="password" type={'password'}/>
             </div>
+            <div style={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+                <Field name={'rememberMe'} component={Input} type={'checkbox'}/> Remember me
+            </div>
             <div>
-                <Field name={'rememberMe'} component={Input} type={'checkbox'}/> remember me
+                <span style={{color: "red"}}>{props.error}</span>
             </div>
             <div>
                 <button>Login</button>

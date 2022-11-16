@@ -4,10 +4,10 @@ import dialogsReducer, {DialogsActionType} from "./dialogs-reducer";
 import usersReducer, {UsersActionType} from "./users-reducer";
 import authReducer, {AuthActionType} from "./auth-reducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {reducer as formReducer} from "redux-form";
+import {FormAction, reducer as formReducer} from "redux-form";
 
 export type StateType = ReturnType<typeof rootReducer>
-export type AppActionType = AuthActionType | DialogsActionType | ProfileActionType | UsersActionType
+export type AppActionType = AuthActionType | DialogsActionType | ProfileActionType | UsersActionType | FormAction
 export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, StateType, unknown, AppActionType>
 
 
