@@ -165,13 +165,6 @@ export const setFollowingInProgress = (userId: number, isFetching: boolean) => {
 
 export const getUsers = (countOnPage: number, currentPage: number) => async (dispatch: Dispatch) => {
     dispatch(setIsFetching(true))
-    // usersAPI.getUsers(countOnPage, currentPage)
-    //     .then(data => {
-    //         dispatch(setUsers(data.items))
-    //         dispatch(setTotalCount(data.totalCount))
-    //         dispatch(setIsFetching(false))
-    //     })
-
     const data = await usersAPI.getUsers(countOnPage, currentPage);
     dispatch(setUsers(data.items))
     dispatch(setTotalCount(data.totalCount))
