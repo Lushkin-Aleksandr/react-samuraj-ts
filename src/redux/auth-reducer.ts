@@ -79,7 +79,7 @@ export const setUserData = (data: AuthDataType) => {
 //------------------------------------------------
 
 export const me = (): AppThunkType => (dispatch) => {
-    authAPI.me()
+    return authAPI.me()
         .then(data => {
             if (data.resultCode === 0) {
                 const {id, email, login} = data.data

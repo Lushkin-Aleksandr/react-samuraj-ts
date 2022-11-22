@@ -5,7 +5,7 @@ import {requiredField} from "../../utils/validators";
 import {connect} from "react-redux";
 import {login} from "../../redux/auth-reducer";
 import {LoginDataType} from "../../api/api";
-import {StateType} from "../../redux/redux-store";
+import {RootStateType} from "../../redux/redux-store";
 import {Redirect} from "react-router-dom";
 
 
@@ -63,7 +63,7 @@ const Login: React.FC<LoginPropsType> = (props) => {
     );
 };
 
-const mstp = (state: StateType) => ({
+const mstp = (state: RootStateType) => ({
     isAuth: state.auth.isAuth
 })
 

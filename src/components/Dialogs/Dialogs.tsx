@@ -11,6 +11,7 @@ import {maxLengthCreator, requiredField} from "../../utils/validators";
 const maxLength50 = maxLengthCreator(50)
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
+
     const dialogItems: JSX.Element[] = props.dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name} lastMessage={d.lastMessage} />)
     const messageItems: JSX.Element[] = props.messages.map(m => <div key={m.id} className={styles.messageItem}><span>{m.messageText}</span></div>)
 

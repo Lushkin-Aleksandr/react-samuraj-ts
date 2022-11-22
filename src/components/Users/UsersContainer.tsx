@@ -7,7 +7,7 @@ import {
     unfollow,
     UserType
 } from "../../redux/users-reducer";
-import {StateType} from "../../redux/redux-store";
+import {RootStateType} from "../../redux/redux-store";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
@@ -59,7 +59,7 @@ class UsersContainer extends React.Component<UsersPropsType, any> {
 }
 
 
-const mapStateToProps = (state: StateType): MapStateToPropsType => ({
+const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
     users: state.usersPage.users,
     countOnPage: state.usersPage.countOnPage,
     currentPage: state.usersPage.currentPage,
@@ -69,10 +69,10 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
 })
 
 
-export default withAuthRedirect(connect(mapStateToProps, {
+export default connect(mapStateToProps, {
     follow,
     unfollow,
     setCurrentPage,
     setFollowingInProgress,
     getUsers
-})(UsersContainer))
+})(UsersContainer)
