@@ -1,58 +1,44 @@
-import React, {ChangeEvent, MouseEvent} from 'react';
-import {updateStatus} from "../../../redux/profile-reducer";
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
-type ProfileStatusType = {
+type PropsType = {
     status: string
     updateStatus: (status: string) => void
 }
 
-type LocalStateType = {
-    editMode: boolean
-    inputValue: string
+
+const ProfileStatus: React.FC<PropsType> = (props) => {
+    const [editMode, setEditMode] = useState(false)
+    const [inputValue, setInputValue] = useState(props.status)
+
+    useEffect(() => {
+        setInputValue(props.status)
+    }, [props.status])
+
+    const handleSpanDoubleClick = () => {
+        setEditMode(true)
+    }
+    const handleInputBlur = () => {
+        setEditMode(false)
+        props.updateStatus(inputValue)
+    }
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.currentTarget.value)
+    }
+
+    return (
+        <div>
+            {
+                !editMode
+                    ? <span
+                        onDoubleClick={handleSpanDoubleClick}>{props.status || 'There is no status'}</span>
+                    : <input
+                        onBlur={handleInputBlur}
+                        onChange={handleInputChange}
+                        value={inputValue}
+                        autoFocus/>
+            }
+        </div>
+    )
 }
 
-class ProfileStatus extends React.Component<ProfileStatusType, LocalStateType> {
-    state = {
-        editMode: false,
-        inputValue: this.props.status
-    }
-
-    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<LocalStateType>, snapshot?: any) {
-        if (prevProps.status !== this.props.status) {
-            this.setState({inputValue: this.props.status})
-        }
-    }
-
-    handleSpanDoubleClick = () => {
-        this.setState({editMode: true})
-    }
-
-    handleInputBlur = () => {
-        this.setState({editMode: false})
-        this.props.updateStatus(this.state.inputValue)
-    }
-
-    handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({inputValue: e.currentTarget.value})
-    }
-
-    render() {
-
-        return (
-            <div>
-                {
-                    !this.state.editMode
-                        ? <span
-                            onDoubleClick={this.handleSpanDoubleClick}>{this.props.status || 'No status'}</span>
-                        : <input
-                            onBlur={this.handleInputBlur}
-                            onChange={this.handleInputChange}
-                            value={this.state.inputValue}
-                            autoFocus />
-                }
-            </div>
-        );
-    }
-}
-
-export default ProfileStatus;
+export default ProfileStatus
