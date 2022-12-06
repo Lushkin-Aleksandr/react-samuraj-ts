@@ -9,7 +9,9 @@ import Textarea from "../../../common/Textarea/Textarea";
 
 const maxLength20Validator = maxLengthCreator(20);
 
-export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+export const MyPosts: React.FC<MyPostsPropsType> = React.memo((props) => {
+
+    console.log('Render')
 
     const postElements: JSX.Element[] = props.posts.map(p => {
         return <Post
@@ -32,7 +34,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             {postElements}
         </div>
     );
-};
+})
 
 
 type FormDataType = {

@@ -1,19 +1,21 @@
 import {v1} from "uuid";
-import {compose, Dispatch} from "redux";
 import {profileAPI} from "../api/api";
 import {AppThunkType} from "./redux-store";
 
 const ADD_POST = 'ADD-POST';
+const REMOVE_POST = 'REMOVE-POST';
 const SET_PROFILE = 'SET-PROFILE';
 const SET_STATUS = 'SET_STATUS';
 
 type AddPostActionType = ReturnType<typeof addPostAC>
+type RemovePostActionType = ReturnType<typeof removePostAC>
 type setProfileActionType = ReturnType<typeof setProfile>
 type SetStatusActionType = ReturnType<typeof setStatus>
 export type ProfileActionType =
     AddPostActionType
     | setProfileActionType
     | SetStatusActionType
+    | RemovePostActionType
 
 
 export type PostType = {
@@ -64,6 +66,9 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
                     ...state.posts
                 ]
             }
+        case "REMOVE-POST": {
+            return {...state, posts: state.posts.filter(p => p.id !== action.payload.postId)}
+        }
 
         case "SET-PROFILE":
             return {
@@ -83,6 +88,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
 
 
 export const addPostAC = (postText: string) => ({type: ADD_POST, payload: {postText}} as const)
+export const removePostAC = (postId: string) => ({type: REMOVE_POST, payload: {postId}} as const)
 export const setProfile = (profile: ProfileType) => {
     return {
         type: SET_PROFILE,
