@@ -1,0 +1,32 @@
+.paginator {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+.paginator button {
+    background-color: transparent;
+    border: none;
+}
+
+.paginator li,
+.paginator li button {
+    cursor: pointer;
+}
+
+.paginator li button:disabled {
+    cursor: not-allowed;
+}
+
+.paginator button svg {
+    fill: #ffffff;
+}
+
+.paginator button:disabled svg {
+    fill: #b7b7b7;
+}
+
+:global .ant-pagination-item-active {
+    color: #ffd184;
+}
