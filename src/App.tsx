@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import { Redirect, Route, withRouter } from 'react-router-dom'
@@ -6,10 +6,8 @@ import News from './components/News/News'
 import Music from './components/Music/Music'
 import Settings from './components/Settings/Settings'
 import { DialogsContainer } from './components/Dialogs/DialogsContainer'
-import UsersContainer from './components/Users/UsersContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
 import HeaderContainer from './components/Header/HeaderContainer'
-import Login from './components/Login/Login'
 import { connect } from 'react-redux'
 import { initializeApp } from './redux/app-reducer'
 import { RootStateType } from './redux/redux-store'
@@ -21,6 +19,9 @@ type MstpType = {
 type AppPropsType = MstpType & {
   initializeApp: () => void
 }
+
+const Login = React.lazy(() => import('./components/Login/Login'))
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'))
 
 class App extends React.Component<AppPropsType> {
   componentDidMount() {
@@ -56,7 +57,9 @@ class App extends React.Component<AppPropsType> {
               <ProfileContainer />
             </Route>
             <Route path={'/dialogs'}>
-              <DialogsContainer />
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <DialogsContainer />
+              </Suspense>
             </Route>
             <Route path={'/news'}>
               <News />
@@ -68,10 +71,14 @@ class App extends React.Component<AppPropsType> {
               <Settings />
             </Route>
             <Route path={'/users'}>
-              <UsersContainer />
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <UsersContainer />
+              </Suspense>
             </Route>
             <Route path={'/login'}>
-              <Login />
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Login />
+              </Suspense>
             </Route>
           </div>
         </div>
