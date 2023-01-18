@@ -40,7 +40,7 @@ class ProfileContainer extends Component<ProfilePropsType, any> {
   }
 
   componentDidUpdate() {
-    if (!this.props.isAuth) {
+    if (!this.props.isAuth && !this.props.match.params.userId) {
       this.props.history.push('/login')
     }
   }
@@ -48,7 +48,14 @@ class ProfileContainer extends Component<ProfilePropsType, any> {
   render() {
     if (!this.props.profile) return <h2>Loading...</h2>
 
-    return <Profile profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus} />
+    return (
+      <Profile
+        profile={this.props.profile}
+        status={this.props.status}
+        updateStatus={this.props.updateStatus}
+        isMine={this.props.isAuth && !this.props.match.params.userId}
+      />
+    )
   }
 }
 

@@ -1,30 +1,32 @@
-import React from 'react';
-import styles from "../Profile.module.css";
-import {ProfileType} from "../../../redux/profile-reducer";
+import React from 'react'
+import styles from '../Profile.module.css'
+import { ProfileType } from '../../../redux/profile-reducer'
 import avatar from '../../../assets/images/avatar.png'
-import ProfileStatus from "./ProfileStatus";
-
+import ProfileStatus from './ProfileStatus'
 
 type PropsType = {
-    profile: ProfileType,
-    status: string
-    updateStatus: (status: string) => void
+  profile: ProfileType
+  status: string
+  updateStatus: (status: string) => void
+  isMine: boolean
 }
 
-const ProfileInfo: React.FC<PropsType> = (props) => {
-    if (!props.profile) return null
+const ProfileInfo: React.FC<PropsType> = props => {
+  if (!props.profile) return null
 
-    return (
-        <div>
-            <div className={styles.profileData}>
-                <img style={{maxWidth: '500px'}} src={props.profile.photos.large || avatar} alt=""/>
-                <h1>{props.profile.fullName}</h1>
-                <ProfileStatus
-                    status={props.status}
-                    updateStatus={props.updateStatus}/>
-            </div>
-        </div>
-    );
-};
+  return (
+    <div>
+      <div className={styles.profileData}>
+        <img style={{ maxWidth: '500px' }} src={props.profile.photos.large || avatar} alt="" />
+        <h1>{props.profile.fullName}</h1>
+        {props.isMine ? (
+          <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
+        ) : (
+          <span>{props.status}</span>
+        )}
+      </div>
+    </div>
+  )
+}
 
-export default ProfileInfo;
+export default ProfileInfo
