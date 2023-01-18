@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Profile from './Profile'
 import { connect } from 'react-redux'
-import { getProfile, getStatus, ProfileType, updateStatus } from '../../redux/profile-reducer'
+import { getProfile, getStatus, ProfileType, updateStatus, uploadAvatar } from '../../redux/profile-reducer'
 import { RootStateType } from '../../redux/redux-store'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
@@ -21,10 +21,11 @@ export type ProfilePropsType = MapStateToPropsType & {
   getProfile: (userId: number) => void
   getStatus: (userId: number) => void
   updateStatus: (status: string) => void
+  uploadAvatar: (avatar: File) => void
 } & RouteComponentProps<ParamsType>
 
 class ProfileContainer extends Component<ProfilePropsType, any> {
-  componentDidMount() {
+  refreshProfile() {
     let userId = this.props.match.params.userId
     let authorizedUserId = this.props.userId
 
@@ -39,9 +40,13 @@ class ProfileContainer extends Component<ProfilePropsType, any> {
     }
   }
 
-  componentDidUpdate() {
-    if (!this.props.isAuth && !this.props.match.params.userId) {
-      this.props.history.push('/login')
+  componentDidMount() {
+    this.refreshProfile()
+  }
+
+  componentDidUpdate(prevProps: Readonly<ProfilePropsType>) {
+    if (prevProps.match.params.userId !== this.props.match.params.userId) {
+      this.refreshProfile()
     }
   }
 
@@ -53,6 +58,7 @@ class ProfileContainer extends Component<ProfilePropsType, any> {
         profile={this.props.profile}
         status={this.props.status}
         updateStatus={this.props.updateStatus}
+        uploadAvatar={this.props.uploadAvatar}
         isMine={this.props.isAuth && !this.props.match.params.userId}
       />
     )
@@ -67,7 +73,6 @@ const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
 })
 
 export default compose<React.ComponentType>(
-  // withAuthRedirect,
-  connect(mapStateToProps, { getProfile, getStatus, updateStatus }),
+  connect(mapStateToProps, { getProfile, getStatus, updateStatus, uploadAvatar }),
   withRouter,
 )(ProfileContainer)

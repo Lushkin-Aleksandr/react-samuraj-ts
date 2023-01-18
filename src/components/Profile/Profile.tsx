@@ -9,12 +9,14 @@ type PropsType = {
   status: string
   isMine: boolean
   updateStatus: (status: string) => void
+  uploadAvatar: (avatar: File) => void
 }
 
 const Profile: React.FC<PropsType> = props => {
   return (
     <div className={styles.profile}>
       <ProfileInfo
+        onUploadAvatar={props.uploadAvatar}
         profile={props.profile}
         status={props.status}
         updateStatus={props.updateStatus}
