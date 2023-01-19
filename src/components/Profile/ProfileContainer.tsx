@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 import Profile from './Profile'
 import { connect } from 'react-redux'
-import { getProfile, getStatus, ProfileType, updateStatus, uploadAvatar } from '../../redux/profile-reducer'
+import {
+  getProfile,
+  getStatus,
+  ProfileType,
+  updateProfileData,
+  updateStatus,
+  uploadAvatar,
+} from '../../redux/profile-reducer'
 import { RootStateType } from '../../redux/redux-store'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { ProfileFormDataType } from './ProfileInfo/ProfileData/ProfileDataForm'
 
 type ParamsType = {
   userId: string
@@ -18,10 +26,11 @@ type MapStateToPropsType = {
 }
 
 export type ProfilePropsType = MapStateToPropsType & {
-  getProfile: (userId: number) => void
-  getStatus: (userId: number) => void
-  updateStatus: (status: string) => void
-  uploadAvatar: (avatar: File) => void
+  getProfile(userId: number): void
+  getStatus(userId: number): void
+  updateStatus(status: string): void
+  uploadAvatar(avatar: File): void
+  updateProfileData(profileData: ProfileFormDataType): Promise<boolean>
 } & RouteComponentProps<ParamsType>
 
 class ProfileContainer extends Component<ProfilePropsType, any> {
@@ -59,6 +68,7 @@ class ProfileContainer extends Component<ProfilePropsType, any> {
         status={this.props.status}
         updateStatus={this.props.updateStatus}
         uploadAvatar={this.props.uploadAvatar}
+        updateProfileData={this.props.updateProfileData}
         isMine={this.props.isAuth && !this.props.match.params.userId}
       />
     )
@@ -73,6 +83,6 @@ const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
 })
 
 export default compose<React.ComponentType>(
-  connect(mapStateToProps, { getProfile, getStatus, updateStatus, uploadAvatar }),
+  connect(mapStateToProps, { getProfile, getStatus, updateStatus, uploadAvatar, updateProfileData }),
   withRouter,
 )(ProfileContainer)

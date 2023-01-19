@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PhotosType } from '../redux/profile-reducer'
+import { PhotosType, ProfileDataType } from '../redux/profile-reducer'
 
 export type LoginDataType = {
   email: string
@@ -64,5 +64,8 @@ export const profileAPI = {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .then(res => res.data)
+  },
+  updateProfileData(profileData: ProfileDataType) {
+    return axiosInstance.put('profile', profileData).then(res => res.data)
   },
 }

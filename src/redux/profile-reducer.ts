@@ -1,6 +1,8 @@
 import { v1 } from 'uuid'
 import { profileAPI } from '../api/api'
-import { AppThunkType } from './redux-store'
+import { AppThunkType, RootStateType } from './redux-store'
+import { ProfileFormDataType } from '../components/Profile/ProfileInfo/ProfileData/ProfileDataForm'
+import { stopSubmit } from 'redux-form'
 
 const ADD_POST = 'ADD-POST'
 const REMOVE_POST = 'REMOVE-POST'
@@ -28,14 +30,19 @@ export type PhotosType = {
   small: string
   large: string
 }
-export type ProfileType = null | {
+
+export type ContactsType = { [key: string]: string }
+
+export type ProfileDataType = {
   userId: number
   lookingForAJob: boolean
   lookingForAJobDescription: string
   fullName: string
-  contacts: any
+  contacts: ContactsType
   photos: PhotosType
 }
+
+export type ProfileType = ProfileDataType | null
 export type ProfilePageType = {
   profile: ProfileType
   posts: PostType[]
@@ -150,6 +157,19 @@ export const uploadAvatar =
     if (data.resultCode === 0) {
       dispatch(setPhotos(data.data.photos))
     } else {
+    }
+  }
+
+export const updateProfileData =
+  (profileData: ProfileFormDataType): AppThunkType =>
+  async (dispatch, getState) => {
+    const state = getState() as RootStateType
+    const data = await profileAPI.updateProfileData({ ...state.profilePage.profile!, ...profileData })
+    if (data.resultCode === 0) {
+      dispatch(getProfile(state.profilePage.profile!.userId))
+    } else {
+      dispatch(stopSubmit('edit-profile', { _error: data.messages[0] }))
+      return Promise.reject({ _error: data.messages[0] })
     }
   }
 
