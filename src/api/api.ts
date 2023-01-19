@@ -5,7 +5,7 @@ export type LoginDataType = {
   email: string
   password: string
   rememberMe?: boolean
-  captcha?: boolean
+  captcha?: string
 }
 
 type ResponseType<D = {}> = {
@@ -67,5 +67,11 @@ export const profileAPI = {
   },
   updateProfileData(profileData: ProfileDataType) {
     return axiosInstance.put('profile', profileData).then(res => res.data)
+  },
+}
+
+export const securityAPI = {
+  getCaptchaUrl() {
+    return axiosInstance.get<{ url: string }>('security/get-captcha-url').then(res => res.data)
   },
 }

@@ -1,4 +1,4 @@
-import { authAPI, LoginDataType } from '../api/api'
+import { authAPI, LoginDataType, securityAPI } from '../api/api'
 import { AppThunkType } from './redux-store'
 import { stopSubmit } from 'redux-form'
 
@@ -16,10 +16,12 @@ type AuthStateType = {
   email: string | null
   login: string | null
   isAuth: boolean
+  captcha: string | null
 }
 
 type SetUserDataType = ReturnType<typeof setUserData>
-export type AuthActionType = SetUserDataType
+type SetCaptchaDataType = ReturnType<typeof setCaptcha>
+export type AuthActionType = SetUserDataType | SetCaptchaDataType
 
 //------------------------------------------------
 // Initial state
@@ -30,6 +32,7 @@ const initialState: AuthStateType = {
   email: null,
   login: null,
   isAuth: false,
+  captcha: null,
 }
 
 //------------------------------------------------
@@ -42,6 +45,12 @@ const authReducer = (state: AuthStateType = initialState, action: AuthActionType
       return {
         ...state,
         ...action.payload.data,
+      }
+    }
+    case 'SET-CAPTCHA': {
+      return {
+        ...state,
+        captcha: action.payload,
       }
     }
     default:
@@ -67,6 +76,12 @@ export const setUserData = (data: AuthDataType) => {
     },
   } as const
 }
+export const setCaptcha = (url: string) => {
+  return {
+    type: 'SET-CAPTCHA',
+    payload: url,
+  } as const
+}
 
 //------------------------------------------------
 // Thunk creators
@@ -87,9 +102,10 @@ export const login =
     authAPI.login(loginData).then(data => {
       if (data.resultCode === 0) {
         dispatch(me())
-      } else if (data.resultCode === 10) {
-        alert('Captcha')
       } else {
+        if (data.resultCode === 10) {
+          dispatch(getCaptcha())
+        }
         const action = stopSubmit('login', { _error: data.messages[0] })
         dispatch(action)
       }
@@ -103,6 +119,12 @@ export const logout = (): AppThunkType => dispatch => {
     } else {
       alert(data.messages[0])
     }
+  })
+}
+
+export const getCaptcha = (): AppThunkType => dispatch => {
+  securityAPI.getCaptchaUrl().then(data => {
+    dispatch(setCaptcha(data.url))
   })
 }
 
