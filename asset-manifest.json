@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/react-samuraj-ts/static/css/main.75fb8124.css",
-    "main.js": "/react-samuraj-ts/static/js/main.9248fb6f.js",
+    "main.css": "/react-samuraj-ts/static/css/main.65e50547.css",
+    "main.js": "/react-samuraj-ts/static/js/main.ddcd2ad5.js",
     "static/css/130.52eadc96.chunk.css": "/react-samuraj-ts/static/css/130.52eadc96.chunk.css",
-    "static/js/130.5f67f5ad.chunk.js": "/react-samuraj-ts/static/js/130.5f67f5ad.chunk.js",
+    "static/js/130.bfc7943c.chunk.js": "/react-samuraj-ts/static/js/130.bfc7943c.chunk.js",
     "static/css/715.12bc4c44.chunk.css": "/react-samuraj-ts/static/css/715.12bc4c44.chunk.css",
     "static/js/715.2dadddab.chunk.js": "/react-samuraj-ts/static/js/715.2dadddab.chunk.js",
     "static/js/429.01525b5d.chunk.js": "/react-samuraj-ts/static/js/429.01525b5d.chunk.js",
     "index.html": "/react-samuraj-ts/index.html",
-    "main.75fb8124.css.map": "/react-samuraj-ts/static/css/main.75fb8124.css.map",
-    "main.9248fb6f.js.map": "/react-samuraj-ts/static/js/main.9248fb6f.js.map",
+    "main.65e50547.css.map": "/react-samuraj-ts/static/css/main.65e50547.css.map",
+    "main.ddcd2ad5.js.map": "/react-samuraj-ts/static/js/main.ddcd2ad5.js.map",
     "130.52eadc96.chunk.css.map": "/react-samuraj-ts/static/css/130.52eadc96.chunk.css.map",
-    "130.5f67f5ad.chunk.js.map": "/react-samuraj-ts/static/js/130.5f67f5ad.chunk.js.map",
+    "130.bfc7943c.chunk.js.map": "/react-samuraj-ts/static/js/130.bfc7943c.chunk.js.map",
     "715.12bc4c44.chunk.css.map": "/react-samuraj-ts/static/css/715.12bc4c44.chunk.css.map",
     "715.2dadddab.chunk.js.map": "/react-samuraj-ts/static/js/715.2dadddab.chunk.js.map",
     "429.01525b5d.chunk.js.map": "/react-samuraj-ts/static/js/429.01525b5d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.75fb8124.css",
-    "static/js/main.9248fb6f.js"
+    "static/css/main.65e50547.css",
+    "static/js/main.ddcd2ad5.js"
   ]
 }
