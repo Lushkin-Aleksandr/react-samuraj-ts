@@ -19,7 +19,7 @@ type MstpType = {
 type AppPropsType = MstpType & {
   initializeApp: () => void
 }
-
+// test
 const Login = React.lazy(() => import('./components/Login/Login'))
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'))
 
